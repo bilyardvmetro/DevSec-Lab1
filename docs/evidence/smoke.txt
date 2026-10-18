@@ -1,0 +1,13 @@
+Anonymous GET /api/data: HTTP 401
+Anonymous POST /api/data: HTTP 401
+Wrong password: HTTP 401
+SQLi login: HTTP 401
+Login: HTTP 200
+Create note with XSS payload: HTTP 201
+XSS escaped: &lt;script&gt;alert(1)&lt;/script&gt;
+Authorized GET /api/data: HTTP 200
+[{"id":1,"title":"Security","content":"\u0026lt;script\u0026gt;alert(1)\u0026lt;/script\u0026gt;"}]
+Malformed JWT: HTTP 401
+Unknown JSON field: HTTP 400
+Wrong media type: HTTP 415
+All curl integration checks passed.

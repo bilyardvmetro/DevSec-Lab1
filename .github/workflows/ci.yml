@@ -31,7 +31,9 @@ jobs:
           go install golang.org/x/vuln/cmd/govulncheck@v1.9.0
       - name: SAST - gosec
         if: ${{ !cancelled() }}
-        run: gosec -fmt=json -out=reports/gosec.json ./...
+        run: |
+          gosec -fmt=json -out=reports/gosec.json ./...
+          cat reports/gosec.json
       - name: SCA - govulncheck
         if: ${{ !cancelled() }}
         run: govulncheck ./... 2>&1 | tee reports/govulncheck.txt
