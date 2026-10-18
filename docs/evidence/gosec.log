@@ -1,0 +1,13 @@
+[gosec] 2026/10/18 14:19:29 Including rules: default
+[gosec] 2026/10/18 14:19:29 Excluding rules: default
+[gosec] 2026/10/18 14:19:29 Including analyzers: default
+[gosec] 2026/10/18 14:19:29 Excluding analyzers: default
+[gosec] 2026/10/18 14:19:29 Import directory: /Users/kirill/coding/DevSec-Lab1/cmd/api
+[gosec] 2026/10/18 14:19:29 Import directory: /Users/kirill/coding/DevSec-Lab1/cmd/hash
+[gosec] 2026/10/18 14:19:29 Import directory: /Users/kirill/coding/DevSec-Lab1/internal/api
+[gosec] 2026/10/18 14:19:29 Checking package: main
+[gosec] 2026/10/18 14:19:29 Checking file: /Users/kirill/coding/DevSec-Lab1/cmd/hash/main.go
+[gosec] 2026/10/18 14:19:29 Checking package: api
+[gosec] 2026/10/18 14:19:29 Checking file: /Users/kirill/coding/DevSec-Lab1/internal/api/api.go
+[gosec] 2026/10/18 14:19:29 Checking package: main
+[gosec] 2026/10/18 14:19:29 Checking file: /Users/kirill/coding/DevSec-Lab1/cmd/api/main.go

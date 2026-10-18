@@ -1,0 +1,48 @@
+name: Go security CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.26.9'
+          cache: true
+      - name: Download and verify dependencies
+        run: go mod download && go mod verify
+      - name: Format and vet
+        run: |
+          test -z "$(gofmt -l cmd internal)"
+          go vet ./...
+      - name: Tests and race detector
+        run: |
+          mkdir -p reports
+          go test -race -cover -v ./... 2>&1 | tee reports/tests.txt
+      - name: Install security scanners
+        run: |
+          go install github.com/securego/gosec/v2/cmd/gosec@v2.29.0
+          go install golang.org/x/vuln/cmd/govulncheck@v1.9.0
+      - name: SAST - gosec
+        if: ${{ !cancelled() }}
+        run: gosec -fmt=json -out=reports/gosec.json ./...
+      - name: SCA - govulncheck
+        if: ${{ !cancelled() }}
+        run: govulncheck ./... 2>&1 | tee reports/govulncheck.txt
+      - name: Build
+        run: go build -trimpath -o bin/api ./cmd/api
+      - name: Curl integration tests
+        run: bash scripts/smoke.sh | tee reports/smoke.txt
+      - name: Upload security reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports
+          path: reports/
+          retention-days: 30
